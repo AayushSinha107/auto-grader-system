@@ -14,8 +14,9 @@ load_dotenv()
 # ==========================================
 model = ModelFactory.create(
     model_platform=ModelPlatformType.GROQ,
-    model_type="llama3-8b-8192", # You can use llama3-70b-8192 for better reasoning
-    model_config_dict=GroqConfig(temperature=0.1).as_dict(), # Low temp for factual grading
+    # Updated to the new, currently supported Llama 3.1 model:
+    model_type="llama-3.1-8b-instant", 
+    model_config_dict=GroqConfig(temperature=0.1).as_dict(), 
 )
 
 # ==========================================
