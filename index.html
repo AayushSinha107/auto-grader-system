@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Auto-Grader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen font-sans">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg max-w-lg w-full">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">📝 AI Auto-Grader</h1>
+            <p class="text-gray-500 mt-2">Upload your text files to generate a PDF report card.</p>
+        </div>
+
+        <form action="/grade" method="post" enctype="multipart/form-data" class="space-y-6" onsubmit="showLoading()">
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Question Paper (.txt)</label>
+                <input type="file" name="question_paper" accept=".txt" required
+                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Textbook / Syllabus (.txt)</label>
+                <input type="file" name="textbook" accept=".txt" required
+                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Student Answers (.txt)</label>
+                <input type="file" name="student_answers" accept=".txt" required
+                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
+            </div>
+
+            <button type="submit" id="submitBtn"
+                class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition duration-300">
+                Generate Report Card
+            </button>
+            
+            <p id="loadingText" class="text-center text-blue-600 font-medium hidden mt-4 animate-pulse">
+                Agents are evaluating... Please wait.
+            </p>
+        </form>
+    </div>
+
+    <script>
+        function showLoading() {
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('loadingText').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
