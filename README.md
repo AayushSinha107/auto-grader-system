@@ -1,15 +1,20 @@
-# 📝 AI Auto-Grader System
+# 🎓 AI Auto-Grader Web App
 
-An automated, multi-agent AI grading pipeline that evaluates student answers against dynamically generated rubrics and outputs a clean PDF report card. Built using the [CAMEL-AI](https://camel-ai.org/) framework and powered by lightning-fast Groq inference.
+A full-stack, multi-agent AI grading platform that evaluates student submissions against dynamically generated rubrics and outputs a clean PDF report card. 
+
+Built with the [CAMEL-AI](https://camel-ai.org/) framework, powered by lightning-fast Groq inference, and served via a modern **FastAPI** backend with a **Tailwind CSS** frontend.
 
 ---
 
 ## ✨ Features
 
-* **📂 Dynamic File Ingestion:** Simply provide your text files. The system automatically ingests all `.txt` documents provided to build its knowledge base—no strict file naming conventions required.
-* **🤖 Multi-Agent Architecture:** Utilizes two distinct AI agents—a **Rubric Agent** (to generate strict answer keys from your provided curriculum) and an **Evaluator Agent** (to grade the student).
-* **⚡ Lightning Fast:** Leverages Groq's Llama 3 models for near-instant reasoning and text generation.
-* **📄 PDF Generation:** Automatically compiles the final evaluation into a neatly formatted `.pdf` report card.
+* **🖥️ Modern Web Interface:** A clean, user-friendly browser interface to upload files and generate reports seamlessly.
+* **📂 Dynamic File Ingestion:** Drop your `.txt` files directly into the web UI. No hardcoded file names or terminal commands required.
+* **🤖 Multi-Agent Architecture:** Utilizes two distinct AI agents:
+  * **Rubric Agent:** Generates strict, fair answer keys from your provided curriculum.
+  * **Evaluator Agent:** Grades the student's submission against the generated rubric.
+* **⚡ Lightning Fast:** Leverages Groq's Llama 3.1 models for near-instant reasoning and evaluation.
+* **📄 Automatic PDF Generation:** Compiles the final evaluation into a neatly formatted `.pdf` report card delivered straight to your browser.
 
 ---
 
@@ -18,9 +23,9 @@ An automated, multi-agent AI grading pipeline that evaluates student answers aga
 ```text
 your-project-folder/
 │
-├── camel/                  # Your Python virtual environment (ignored in Git)
+├── camel/                  # Python virtual environment (ignored in Git)
 ├── .gitignore              # Specifies intentionally untracked files
-├── grade_system.py         # The main execution script
+├── main.py                 # The FastAPI server and AI agent logic
+├── index.html              # The Tailwind CSS frontend UI
 │
-├── *.txt                   # Your input files (e.g., questions, curriculum, student answers)
-└── Student_Result.pdf      # Output: Generated automatically after evaluation
+└── Graded_Report.pdf       # Output: Downloaded automatically after evaluation
