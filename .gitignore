@@ -1,4 +1,5 @@
 camel/
+__pycache__/
 .env
 question_paper.txt
 textbook.txt
