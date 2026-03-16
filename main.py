@@ -59,8 +59,6 @@ async def grade_papers(
     textbook: UploadFile = File(...),
     student_answers: UploadFile = File(...)
 ):
-    """Handles file uploads, runs the AI agents, and returns a PDF."""
-    
     # Read the uploaded files directly from memory
     qp_text = (await question_paper.read()).decode('utf-8')
     tb_text = (await textbook.read()).decode('utf-8')
