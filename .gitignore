@@ -1,7 +1,4 @@
 camel/
 __pycache__/
 .env
-question_paper.txt
-textbook.txt
-student_answers.txt
 Student_Result.pdf
