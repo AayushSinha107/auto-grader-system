@@ -3,73 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Auto-Grader</title>
+    <title>AI Auto-Grader Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom animation for the gradient background */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen font-sans">
+<body class="flex items-center justify-center min-h-screen font-sans antialiased p-4">
 
-    <div class="bg-white p-8 rounded-xl shadow-lg max-w-lg w-full">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">📝 AI Auto-Grader</h1>
-            <p class="text-gray-500 mt-2">Upload your text or PDF files to generate a report card.</p>
+    <div class="bg-white/90 backdrop-blur-xl p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] max-w-lg w-full border border-white/50">
+        
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-3">
+                AI Auto-Grader
+            </h1>
+            <p class="text-gray-600 font-medium">Upload your documents to generate a smart report card.</p>
         </div>
 
-        <form id="gradeForm" class="space-y-6">
+        <form id="gradeForm" class="space-y-5">
             
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Question Paper (.txt, .pdf)</label>
-                <input type="file" name="question_paper" accept=".txt,.pdf" required
-                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
-            </div>
+            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer bg-gray-50/50 hover:bg-blue-50 hover:border-blue-400 transition-all group">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg class="w-8 h-8 mb-3 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <p class="mb-2 text-sm text-gray-500 font-semibold"><span class="text-blue-600">Click to upload</span> Question Paper</p>
+                    <p class="text-xs text-gray-400">TXT or PDF</p>
+                </div>
+                <input type="file" name="question_paper" accept=".txt,.pdf" required class="hidden" onchange="updateFileName(this)">
+                <p class="file-name text-sm text-blue-600 font-bold hidden pb-2"></p>
+            </label>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Textbook / Syllabus (.txt, .pdf)</label>
-                <input type="file" name="textbook" accept=".txt,.pdf" required
-                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
-            </div>
+            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer bg-gray-50/50 hover:bg-purple-50 hover:border-purple-400 transition-all group">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg class="w-8 h-8 mb-3 text-gray-400 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <p class="mb-2 text-sm text-gray-500 font-semibold"><span class="text-purple-600">Click to upload</span> Textbook / Syllabus</p>
+                    <p class="text-xs text-gray-400">TXT or PDF</p>
+                </div>
+                <input type="file" name="textbook" accept=".txt,.pdf" required class="hidden" onchange="updateFileName(this)">
+                <p class="file-name text-sm text-purple-600 font-bold hidden pb-2"></p>
+            </label>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Student Answers (.txt, .pdf)</label>
-                <input type="file" name="student_answers" accept=".txt,.pdf" required
-                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
-            </div>
+            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer bg-gray-50/50 hover:bg-green-50 hover:border-green-400 transition-all group">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg class="w-8 h-8 mb-3 text-gray-400 group-hover:text-green-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <p class="mb-2 text-sm text-gray-500 font-semibold"><span class="text-green-600">Click to upload</span> Student Answers</p>
+                    <p class="text-xs text-gray-400">TXT or PDF</p>
+                </div>
+                <input type="file" name="student_answers" accept=".txt,.pdf" required class="hidden" onchange="updateFileName(this)">
+                <p class="file-name text-sm text-green-600 font-bold hidden pb-2"></p>
+            </label>
 
             <button type="submit" id="submitBtn"
-                class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-                Generate Report Card
+                class="mt-4 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-lg py-4 px-4 rounded-2xl hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+                🚀 Generate Report Card
             </button>
             
-            <p id="loadingText" class="text-center text-blue-600 font-medium hidden mt-4 animate-pulse">
-                Agents are evaluating... Please wait.
-            </p>
+            <div id="loadingText" class="hidden mt-4 text-center">
+                <div class="inline-flex items-center justify-center space-x-2 bg-blue-50 py-3 px-6 rounded-full border border-blue-100">
+                    <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    <span class="text-blue-700 font-medium">AI Agents are evaluating...</span>
+                </div>
+            </div>
         </form>
     </div>
 
     <script>
+        // Shows the name of the file inside the dashed box after a user selects it
+        function updateFileName(input) {
+            const fileNameDisplay = input.nextElementSibling;
+            const uploadIconAndText = input.previousElementSibling;
+            
+            if (input.files && input.files.length > 0) {
+                fileNameDisplay.textContent = "📄 " + input.files[0].name;
+                fileNameDisplay.classList.remove('hidden');
+                uploadIconAndText.classList.add('hidden');
+            } else {
+                fileNameDisplay.classList.add('hidden');
+                uploadIconAndText.classList.remove('hidden');
+            }
+        }
+
+        // Handles the form submission securely in the background
         document.getElementById('gradeForm').addEventListener('submit', async function(event) {
-            // 1. Stop the browser from doing its default form submission
             event.preventDefault();
 
-            // 2. Hide the button and show the loading text
             document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('loadingText').style.display = 'block';
+            document.getElementById('loadingText').classList.remove('hidden');
 
-            // 3. Package up the uploaded files
             const formData = new FormData(this);
 
             try {
-                // 4. Send the files to our FastAPI backend silently in the background
                 const response = await fetch('/grade', {
                     method: 'POST',
                     body: formData
                 });
 
                 if (response.ok) {
-                    // 5. Convert the response into a downloadable file (a Blob)
                     const blob = await response.blob();
                     const downloadUrl = window.URL.createObjectURL(blob);
                     
-                    // Create an invisible link, click it to download the PDF, then remove it
                     const a = document.createElement('a');
                     a.href = downloadUrl;
                     a.download = "Graded_Report.pdf";
@@ -77,7 +118,6 @@
                     a.click();
                     a.remove();
                     
-                    // Clean up the memory
                     window.URL.revokeObjectURL(downloadUrl);
                 } else {
                     alert("Oops! The AI agents ran into an error. Please try again.");
@@ -86,12 +126,16 @@
                 console.error("Error:", error);
                 alert("Something went wrong connecting to the server.");
             } finally {
-                // 6. Reset the UI back to normal, regardless of success or failure!
+                // Reset the UI
                 document.getElementById('submitBtn').style.display = 'block';
-                document.getElementById('loadingText').style.display = 'none';
-                
-                // Optional: clear the file inputs so it's ready for the next student
+                document.getElementById('loadingText').classList.add('hidden');
                 this.reset(); 
+                
+                // Reset the file input visuals
+                const fileNames = document.querySelectorAll('.file-name');
+                const uploadIcons = document.querySelectorAll('.group > div');
+                fileNames.forEach(el => el.classList.add('hidden'));
+                uploadIcons.forEach(el => el.classList.remove('hidden'));
             }
         });
     </script>
