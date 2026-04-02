@@ -1,4 +1,5 @@
 camel/
+.venv/
 __pycache__/
 .env
 Student_Result.pdf
